@@ -1,0 +1,10 @@
+spring:
+   datasource:
+        url: jdbc:mysql://localhost:3306/xworkz
+        username: root
+        password: Suhas@1996
+   jpa: 
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        show-sql: true
+        format-sql: true
+        ddl-auto: update
