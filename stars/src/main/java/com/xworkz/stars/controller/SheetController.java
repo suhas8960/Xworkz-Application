@@ -46,7 +46,7 @@ public class SheetController {
 //	}
 
 	@PostMapping()
-	public String saveDataToSheet(@RequestHeader String spreadsheetId, @RequestBody @Val StarsDTO dto)
+	public String saveDataToSheet(@RequestHeader String spreadsheetId, @RequestBody @Valid StarsDTO dto)
 			throws IOException, GeneralSecurityException {
 		return googleSheetService.writeDataToSheet(spreadsheetId, dto);
 	}
