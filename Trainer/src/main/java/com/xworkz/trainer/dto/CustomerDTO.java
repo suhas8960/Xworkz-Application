@@ -17,7 +17,8 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class CustomerDTO {
-	private Integer coustomerId;
+	private Long coustomerId;
+	private Integer trainerId;
 	@Size(max = 40, min = 3, message = "name must not be null")
 	private String name;
 	private String address;

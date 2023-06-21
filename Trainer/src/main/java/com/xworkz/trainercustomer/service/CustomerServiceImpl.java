@@ -121,7 +121,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerEntity findById(Integer coustomerId) {
+	public CustomerEntity findById(Long coustomerId) {
 		log.info("findById Running in service.....");
 		if (coustomerId > 0) {
 			CustomerEntity byId = this.repository.findById(coustomerId);
@@ -134,22 +134,28 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Boolean updateEntity(CustomerEntity entity) {
+	public Boolean updateEntity(CustomerDTO dto) {
 		log.info("updateEntity in service");
-	
-		if(entity !=null) {
-		Boolean update = repository.update(entity);
-		return update;
-		}else {
-			log.info("customer is not update");
-		}
+		CustomerEntity entity = new CustomerEntity();
+		BeanUtils.copyProperties(dto, entity);
+		if (entity != null) {
+			Boolean update = repository.update(entity);
+			log.info("update : " + update);
+		} 
+			log.info("data not update");
+		
 		return true;
 	}
 
 	@Override
-	public void deleteEntity(Integer coustomerId) {
+	public void deleteEntity(Long coustomerId) {
 		log.info("deleteEntity in service");
 		repository.deleteById(coustomerId);
+	}
+
+	@Override
+	public List<CustomerEntity> searchByName(String letters) {
+		return repository.findByNameContaining(letters);
 	}
 
 }

@@ -16,7 +16,9 @@ public interface CustomerRepository {
 
 	Boolean update(CustomerEntity entity);
 	
-	void deleteById(Integer coustomerId);
+	void deleteById(Long coustomerId);
 	
-	CustomerEntity findById(Integer customerId);
+	CustomerEntity findById(Long customerId);
+	
+	List<CustomerEntity> findByNameContaining(String letters);
 }

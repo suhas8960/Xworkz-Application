@@ -37,13 +37,13 @@ footer {
 				alt="" width="80" height="48" class="d-inline-block align text-top">
 				<div>
       <a href="Signin.jsp" class="btn btn-info">Logout</a>
-     <span style="color: white;">Welcome,${userName} ${lastName}</span>
+     <span style="color: white;">Welcome,${udto.name} ${udto.lastName}</span>
       <span> <img src="download?fileName=${dtoPic}" height="70" width="80"></span>
       </div>
 		</div>
 	</nav>
 	<a href="UpdateProfile.jsp" class="btn btn-info">Update Profile</a>
-	<a href="AddCustomer.jsp" class="btn btn-info">AddCustomer</a>
+	<a href="AddCustomer.jsp" class="btn btn-info">AddOrUpdateCustomer</a>
 	<a href="Customer.jsp" class="btn btn-info">Customer</a>
 	
 	<footer>
@@ -51,7 +51,7 @@ footer {
 			© Created By : Suhas Banakar &nbsp; <a href="#"
 				style="font-size: small; color: blue;"><u>
 					suhasnb.xworkz@gmail.com</u></a>
-					<span style="color: white;">LastLogin : ${lastLoginTime}</span>
+					<span style="color: white;">LastLogin : ${udto.loginTime}</span>
 		</p>
 		
 	</footer>

@@ -22,7 +22,7 @@ public class ForgetPasswordController {
 	@Qualifier("trainerForgetPasswordServiceImpl")
 	private TrainerService trainerForgetPasswordServiceImpl;
 
-	@GetMapping("forget")
+	@GetMapping("forget")//Page NAme
 	public String forgotPassword(Integer otp, String email, TrainerEntity entity, Model model) {
 
 		Boolean otpByEmail = trainerForgetPasswordServiceImpl.updateOtpByEmail(otp, email, entity);

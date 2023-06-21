@@ -18,7 +18,7 @@
 		if (emailValue != null && emailValue != ""
 			&& emailValue.length > 4 && emailValue.length < 40) {
 		const xhttp = new XMLHttpRequest();
-		xhttp.open("GET", "http://localhost:8081/Trainer/onEmail/" + emailValue);
+		xhttp.open("GET", "http://localhost:8080/Trainer/onEmail/" + emailValue);
 		xhttp.send();
 		xhttp.onload = function() {
 			console.log(this.responseText);
@@ -93,6 +93,7 @@ footer {
 									<input type="email" class="form-control" id="emai" name="email"
 										aria-describedby="emailHelp" placeholder="Enter email"
 										onchange="validEmail()" required> <span id="display" style="color: red"></span>
+										 <span id="emailError" style="color: red"></span>
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control" id="pass"

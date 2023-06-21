@@ -25,62 +25,45 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 //@RequestMapping("update")
 public class UpdateCustomerController {
-	
+
 	@Autowired
 	private CustomerService service;
-	
-	@RequestMapping(value = "/customer/{coustomerId}",method = RequestMethod.GET)
-	public String update(Model model, @PathVariable Integer coustomerId) {
+
+	@RequestMapping(value = "/customer/{coustomerId}", method = RequestMethod.GET)
+	public String update(Model model, @PathVariable Long coustomerId) {
 		log.info("Running in update get method");
 		CustomerEntity entity = this.service.findById(coustomerId);
-		if(entity !=null) {
-		model.addAttribute("dtos", entity);
-		return "AddCustomer";
-		}else {
+		if (entity != null) {
+			model.addAttribute("dtos", entity);
+			model.addAttribute("headers", "UpdateCustomer");
+			return "AddCustomer";
+		} else {
 			model.addAttribute("msg", "Entity not found");
-			
+
 		}
 		return "LoginSucess";
 	}
-	
-	@RequestMapping(value = "/customer/update",method = RequestMethod.PUT)
-	public String updateCustomer(CustomerEntity entity,Model model) {
-		log.info("update customer is running....");
-		System.out.println("Inside Update");
-		Boolean updateEntity = service.updateEntity(entity);
-		log.info("updateEntity : "+updateEntity);
-		if(updateEntity=true) {
-			model.addAttribute("msg", "Update Customer Sucessfuly");
-			return "LoginSucess";
-		}else {
-			model.addAttribute("msg", "Customer not Update");
-			return "LoginSucess";
-		}
-	}
-	
-	
-	@RequestMapping(value = "/customer",method = RequestMethod.GET,params = "submit")
+
+	@RequestMapping(value = "/customer", method = RequestMethod.GET, params = "submit")
 	public String allCustomerList(Model model) {
-		List<CustomerEntity> allCustomer= service.allCustomer();
-		if(allCustomer!=null) {
+		List<CustomerEntity> allCustomer = service.allCustomer();
+		if (allCustomer != null) {
 			model.addAttribute("customer", allCustomer);
 			return "Customer";
-		}else {
+		} else {
 			model.addAttribute("msg", "Customer is not added");
 			return "LoginSucess";
 		}
-		
-		
+
 	}
-	
-	@RequestMapping(value = "/customer/byId/{customerId}",method = RequestMethod.GET)
-	public RedirectView delete(@PathVariable Integer customerId,Model model , HttpServletRequest req) {
+
+	@RequestMapping(value = "/customer/byId/{customerId}", method = RequestMethod.GET)
+	public RedirectView delete(@PathVariable Long customerId, Model model, HttpServletRequest req) {
 		service.deleteEntity(customerId);
 		model.addAttribute("customer", customerId);
 		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl(req.getContextPath()+ "/customer?submit=submit");
+		redirectView.setUrl(req.getContextPath() + "/customer?submit=submit");
 		return redirectView;
 	}
-	
 
 }

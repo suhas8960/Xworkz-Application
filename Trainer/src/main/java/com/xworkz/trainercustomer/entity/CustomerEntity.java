@@ -26,15 +26,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(name = "customer")
 @NamedQueries({
-	@NamedQuery(name = "findBy", query = "select count(*)from CustomerEntity customer where customer.email=:mail"),
-	@NamedQuery(name = "findByAlls", query = "select customer from CustomerEntity customer"),
-	@NamedQuery(name = "findById", query = "select customer from CustomerEntity customer where customer.coustomerId=:ids")})
+		@NamedQuery(name = "findBy", query = "select count(*)from CustomerEntity customer where customer.email=:mail"),
+		@NamedQuery(name = "findByAlls", query = "select customer from CustomerEntity customer"),
+		@NamedQuery(name = "findById", query = "select customer from CustomerEntity customer where customer.coustomerId=:ids") })
 public class CustomerEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer coustomerId;
-	private Integer ids = 0;
+	private Long coustomerId;
+	private Integer trainerId;
 	private String name;
 	private String address;
 	private String email;
@@ -42,10 +42,10 @@ public class CustomerEntity implements Serializable {
 	private String companyName;
 	private Integer salary;
 
-	public CustomerEntity(Integer ids, String name, String address, String email, Long mobileNo,
+	public CustomerEntity(Integer trainerId, String name, String address, String email, Long mobileNo,
 			String companyName, Integer salary) {
 		super();
-		this.ids = ids;
+		this.trainerId = trainerId;
 		this.name = name;
 		this.address = address;
 		this.email = email;

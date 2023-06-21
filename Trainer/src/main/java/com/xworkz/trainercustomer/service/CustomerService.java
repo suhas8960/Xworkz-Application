@@ -18,10 +18,12 @@ public interface CustomerService {
 
 	List<CustomerEntity> allCustomer();
 
-	CustomerEntity findById(Integer coustomerId);
+	CustomerEntity findById(Long coustomerId);
 
-	Boolean updateEntity(CustomerEntity entity);
+	Boolean updateEntity(CustomerDTO dto);
 
-	void deleteEntity(Integer coustomerId);
+	void deleteEntity(Long coustomerId);
+
+	List<CustomerEntity> searchByName(String letters);
 
 }

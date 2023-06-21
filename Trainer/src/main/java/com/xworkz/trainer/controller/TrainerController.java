@@ -90,18 +90,14 @@ public class TrainerController {
 					}
 
 					log.info("User ID and password is matched");
-					// model.addAttribute("userID", udto.getUserId());//request scope
 					HttpSession httpSession = request.getSession(true);
-					httpSession.setAttribute("userName", userSignIn.getName());
-					httpSession.setAttribute("lastLoginTime", userSignIn.getLoginTime());
-					httpSession.setAttribute("lastName", userSignIn.getLastName());
-					httpSession.setAttribute("userEmail", userSignIn.getEmail());
+					httpSession.setAttribute("udto", userSignIn);
 					System.err.println(userSignIn.getName());
 					System.err.println(userSignIn.getImgPath());
 					if (userSignIn.getImgPath() != null) {
 						httpSession.setAttribute("dtoPic", userSignIn.getImgPath());
 					}
-					httpSession.setAttribute("udto", userSignIn);
+					
 					return "LoginSucess";
 				}
 			}

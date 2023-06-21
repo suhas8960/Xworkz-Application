@@ -11,6 +11,36 @@
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
 </head>
+<script>
+	function filterByName() {
+		var input = document.getElementById('letterFilter').value;
+		console.log(input);
+		if (input.length > 0) {
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 3 && xhr.status === 200) {
+					var suggestions = JSON.parse(xhr.responseText);
+					populateDatalist(suggestions);
+				}
+			}
+		};
+		xhr.open('GET', 'http://localhost:8080/Trainer/search/' + input, true);
+		xhr.send();
+	}
+
+	function populateDatalist(suggestions) {
+		var datalist = document.getElementById("auto-suggestion");
+		datalist.innerHTML = ""; // Clear existing options
+
+		for (var i = 0; i < suggestions.length; i++) {
+			var option = document.createElement("option");
+			console.log(option);
+			option.value = suggestions[i];
+			/* console.log(option.value); */
+			datalist.appendChild(option);
+		}
+	};
+</script>
 <style>
 tr {
 	color: red;
@@ -40,20 +70,26 @@ footer {
 			</a>
 			<div>
 				<a href="LoginSucess.jsp" class="btn btn-info">Home</a> <span
-					style="color: white;">Welcome,${userName} ${lastName}</span> <span>
-					<img src="download?fileName=${dtoPic}" height="70" width="80">
-				</span>
+					style="color: white;">Welcome,${udto.name} ${udto.lastName}</span>
+				<span> <img src="download?fileName=${dtoPic}" height="70"
+					width="80"></span>
 			</div>
 		</div>
 	</nav>
- <form action="customer" >
+	<form action="customer">
 		<div align="center">
 
 			<h2 style="color: green">Customers</h2>
-			<!-- <input type="submit" class="btn btn-info" value="ViewCustomer"> -->
-			<input type="submit" class="btn btn-info" name="submit" value="submit"/>
+			<div>
+				<input list="auto-suggestion" name="letters" id="letterFilter"
+					placeholder="name search" onkeyup="filterByName()"> 
+					<datalist id="auto-suggestion">
+					</datalist>
+			</div>
+			<input type="submit" class="btn btn-info" name="submit"
+				value="submit" />
 
-			<table border="6" cellpadding="10">
+			<table border="6" cellpadding="10" id="myTable">
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
@@ -67,7 +103,7 @@ footer {
 				</tr>
 
 				<c:forEach items="${customer}" var="allCustomer">
-					<tr>
+					<tr id="search">
 						<td>${allCustomer.coustomerId}</td>
 						<td>${allCustomer.name}</td>
 						<td>${allCustomer.address}</td>
@@ -75,16 +111,16 @@ footer {
 						<td>${allCustomer.mobileNo}</td>
 						<td>${allCustomer.companyName}</td>
 						<td>${allCustomer.salary}</td>
-						<td><a class="btn btn-info" href="customer/${allCustomer.coustomerId}">Edit</a></td>
-						<td>
-						 <a href="customer/byId/${allCustomer.coustomerId}"class="btn btn-info">Delete</a>
-						</td>
+						<td><a class="btn btn-info"
+							href="customer/${allCustomer.coustomerId}">Edit</a></td>
+						<td><a href="customer/byId/${allCustomer.coustomerId}"
+							class="btn btn-info">Delete</a></td>
 					</tr>
 				</c:forEach>
 			</table>
 		</div>
 
-	</form> 
+	</form>
 
 
 
@@ -93,7 +129,7 @@ footer {
 			© Created By : Suhas Banakar &nbsp; <a href="#"
 				style="font-size: small; color: blue;"><u>
 					suhasnb.xworkz@gmail.com</u></a> <span style="color: white;">LastLogin
-				: ${lastLoginTime}</span>
+				: ${udto.loginTime}</span>
 		</p>
 	</footer>
 </body>

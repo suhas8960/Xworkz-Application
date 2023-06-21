@@ -7,6 +7,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -92,7 +96,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 	}
 	
 	@Override
-	public void deleteById(Integer coustomerId) {
+	public void deleteById(Long coustomerId) {
 		EntityManager manager =null;
 		try {
 			manager= this.factory.createEntityManager();
@@ -109,7 +113,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 	
 	
 	@Override
-	public CustomerEntity findById(Integer coustomerId) {
+	public CustomerEntity findById(Long coustomerId) {
 		log.info("findById is Running...");
 		EntityManager manager = null;
 		try {
@@ -131,4 +135,20 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 		return null;
 	}
 
+	@Override
+	public List<CustomerEntity> findByNameContaining(String letters) {
+        EntityManager entityManager = factory.createEntityManager();
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<CustomerEntity> criteriaQuery = criteriaBuilder.createQuery(CustomerEntity.class);
+            Root<CustomerEntity> root = criteriaQuery.from(CustomerEntity.class);
+            criteriaQuery.select(root).where(criteriaBuilder.like(root.get("name"), "%" + letters + "%"));
+
+            TypedQuery<CustomerEntity> query = entityManager.createQuery(criteriaQuery);
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
+	
 }
